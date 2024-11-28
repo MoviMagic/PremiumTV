@@ -4,13 +4,13 @@ import { getFirestore, doc, setDoc, getDoc, collection, getDocs, Timestamp, dele
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDnGHxXiUkm1Onblu3en-V2v5Yxk9OnFL8",
-  authDomain: "replay-tv-33de1.firebaseapp.com",
-  projectId: "replay-tv-33de1",
-  storageBucket: "replay-tv-33de1.firebasestorage.app",
-  messagingSenderId: "19557200212",
-  appId: "1:19557200212:web:a9bb8b64cbd17be46758c1",
-  measurementId: "G-JLFC3D8V9Y"
+  apiKey: "AIzaSyDsxBHmWLgtduZlOeuf_erD90InXa4i3Cg",
+  authDomain: "premiumtv-ba226.firebaseapp.com",
+  projectId: "premiumtv-ba226",
+  storageBucket: "premiumtv-ba226.firebasestorage.app",
+  messagingSenderId: "542391446242",
+  appId: "1:542391446242:web:b21e385f99718c14aaccbb",
+  measurementId: "G-0B1E47XNFW"
 };
 
 // Inicializar Firebase
