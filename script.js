@@ -1,0 +1,170 @@
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDsxBHmWLgtduZlOeuf_erD90InXa4i3Cg",
+  authDomain: "premiumtv-ba226.firebaseapp.com",
+  projectId: "premiumtv-ba226",
+  storageBucket: "premiumtv-ba226.firebasestorage.app",
+  messagingSenderId: "542391446242",
+  appId: "1:542391446242:web:b21e385f99718c14aaccbb",
+  measurementId: "G-0B1E47XNFW"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const loginForm = document.getElementById("admin-login-form");
+const userManagementContainer = document.getElementById("user-management-container");
+const loginContainer = document.getElementById("login-container");
+const userList = document.getElementById("user-list");
+const deviceList = document.getElementById("device-list");
+
+// Login
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("admin-login-email").value;
+  const password = document.getElementById("admin-login-password").value;
+
+  try {
+    // Configurar persistencia de sesión a 'local'
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    const userDoc = await db.collection("adminUsers").doc(userCredential.user.uid).get();
+
+    if (userDoc.exists && userDoc.data().role === "admin") {
+      loginContainer.classList.add("hidden");
+      userManagementContainer.classList.remove("hidden");
+      loadUsers();
+    } else {
+      throw new Error("No tienes permiso para acceder.");
+    }
+  } catch (error) {
+    document.getElementById("login-error").classList.remove("hidden");
+  }
+});
+
+// Verificar si el usuario sigue autenticado al cargar la página
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    db.collection("adminUsers").doc(user.uid).get().then((doc) => {
+      if (doc.exists && doc.data().role === "admin") {
+        loginContainer.classList.add("hidden");
+        userManagementContainer.classList.remove("hidden");
+        loadUsers();
+      }
+    });
+  }
+});
+
+
+// Logout
+document.getElementById("logout-btn").addEventListener("click", () => {
+  auth.signOut().then(() => {
+    loginContainer.classList.remove("hidden");
+    userManagementContainer.classList.add("hidden");
+  });
+});
+
+// Load Users
+async function loadUsers() {
+  const querySnapshot = await db.collection("users").get();
+  userList.innerHTML = "";
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    userList.innerHTML += `
+      <tr>
+        <td>${data.username}</td>
+        <td>${data.email}</td>
+        <td>${data.password}</td>
+        <td>${data.expirationDate.toDate().toLocaleDateString()}</td>
+        <td>
+          <button onclick="renewUser('${doc.id}', 1)">+1 Mes</button>
+          <button onclick="renewUser('${doc.id}', 3)">+3 Meses</button>
+          <button onclick="renewUser('${doc.id}', 6)">+6 Meses</button>
+          <button onclick="renewUser('${doc.id}', 12)">+12 Meses</button>
+          <button onclick="deleteUser('${doc.id}')">Eliminar</button>
+          <button onclick="loadDevices('${doc.id}')">Ver Dispositivos</button>
+        </td>
+      </tr>`;
+  });
+}
+
+// Create User
+document.getElementById("add-user-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("new-username").value;
+  const email = document.getElementById("new-email").value;
+  const password = document.getElementById("new-password").value;
+  const expirationDate = document.getElementById("expiration-date").value;
+
+  try {
+    const newUser = await auth.createUserWithEmailAndPassword(email, password);
+
+    // Convertir expirationDate a Timestamp
+    const expirationTimestamp = firebase.firestore.Timestamp.fromDate(new Date(expirationDate));
+
+    await db.collection("users").doc(newUser.user.uid).set({
+      username,
+      email,
+      password,
+      expirationDate: expirationTimestamp, // Guardar como Timestamp
+    });
+    loadUsers();
+  } catch (error) {
+    console.error("Error creando usuario:", error);
+  }
+});
+
+// Renew User
+async function renewUser(userId, months) {
+  const userRef = db.collection("users").doc(userId);
+  const userDoc = await userRef.get();
+
+  if (userDoc.exists) {
+    const currentDate = new Date(); // Fecha actual
+    const expirationDate = userDoc.data().expirationDate.toDate(); // Fecha de expiración actual
+
+    // Calcular la fecha base para la renovación
+    const baseDate = expirationDate > currentDate ? expirationDate : currentDate;
+
+    // Añadir los meses de renovación
+    baseDate.setMonth(baseDate.getMonth() + months);
+
+    // Convertir a Timestamp y actualizar en Firestore
+    const newExpirationTimestamp = firebase.firestore.Timestamp.fromDate(baseDate);
+    await userRef.update({ expirationDate: newExpirationTimestamp });
+
+    // Recargar la lista de usuarios
+    loadUsers();
+  }
+}
+
+// Delete User
+async function deleteUser(userId) {
+  await db.collection("users").doc(userId).delete();
+  loadUsers();
+}
+
+// Load Devices
+async function loadDevices(userId) {
+  const devicesRef = db.collection("users").doc(userId).collection("devices");
+  const querySnapshot = await devicesRef.get();
+  deviceList.innerHTML = "";
+  querySnapshot.forEach((doc) => {
+    deviceList.innerHTML += `
+      <tr>
+        <td>${doc.id}</td>
+        <td>
+          <button onclick="deleteDevice('${userId}', '${doc.id}')">Eliminar</button>
+        </td>
+      </tr>`;
+  });
+}
+
+// Delete Device
+async function deleteDevice(userId, deviceId) {
+  await db.collection("users").doc(userId).collection("devices").doc(deviceId).delete();
+  loadDevices(userId);
+} 

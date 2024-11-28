@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Videos Publicitarios</title>
+    <link rel="stylesheet" href="featuredVideos_styles.css">
+    <!-- Firebase App -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard de Videos Publicitarios</h1>
+        <form id="adVideoForm">
+            <div class="form-group">
+                <label for="title">Título Principal (ID de Documento)</label>
+                <input type="text" id="title" placeholder="Ejemplo: Avances" required>
+            </div>
+            <div class="form-group">
+                <label for="videoTitle">Descripción</label>
+                <input type="text" id="videoTitle" placeholder="Ejemplo: REPLAY TV" required>
+            </div>
+            <div class="form-group">
+                <label for="videoUrl">URL del Video</label>
+                <input type="text" id="videoUrl" placeholder="Ejemplo: https://yourclubox.com..." required>
+            </div>
+            <div class="form-group">
+                <label for="isActive">¿Está Activo?</label>
+                <select id="isActive" required>
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <button type="submit">Agregar o Actualizar Video</button>
+        </form>
+        <div id="successMessage" class="hidden">Operación realizada con éxito!</div>
+    </div>
+
+    <script src="featuredVideos_script.js"></script>
+</body>
+</html>
