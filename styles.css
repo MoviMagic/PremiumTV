@@ -1,10 +1,11 @@
 /* Estilos generales */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #141b29;
-  color: #ffffff;
+  background: linear-gradient(135deg, #1e2a47, #141b29);
+  color: #e4e6eb;
+  font-size: 16px; /* Base para ajustar fuentes */
 }
 
 .hidden {
@@ -15,32 +16,45 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background-color: #0c1b33;
-  flex-wrap: wrap; /* Permite que los elementos bajen si no caben */
+  padding: 1.5rem;
+  background-color: #1e2a47;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  border-bottom: 1px solid #4a90e2;
 }
 
 h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  color: #ffffff;
+  text-align: center; /* Centrado para dispositivos pequeños */
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin: 1rem 0;
-  width: 100%;
-  max-width: 500px; /* Limitar el ancho máximo */
-  margin-left: auto;
-  margin-right: auto;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  width: 90%; /* Ocupa la mayor parte de la pantalla en dispositivos móviles */
+  max-width: 500px;
+  padding: 1.5rem;
+  background-color: #1e2a47;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 input, button {
-  padding: 0.5rem;
+  padding: 0.75rem;
   font-size: 1rem;
   width: 100%;
+  border-radius: 6px;
   box-sizing: border-box;
+  border: 1px solid #4a90e2;
+}
+
+input {
+  background-color: #28324c;
+  color: #ffffff;
 }
 
 button {
@@ -48,6 +62,7 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -57,26 +72,131 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  word-wrap: break-word;
+  margin-top: 2rem;
+  background-color: #1e2a47;
+  color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 th, td {
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: left;
-  border: 1px solid #ffffff;
-  font-size: 0.9rem;
+  border-bottom: 1px solid #4a90e2;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #28324c;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #28324c;
+}
+
+td.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+td.actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+td.actions button:hover {
+  background-color: #357ab8;
+}
+
+/* Estilos de Manage Resellers */
+#reseller-management-section {
+  margin-top: 2rem;
+}
+
+#add-reseller-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#add-reseller-form input, #add-reseller-form button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #4a90e2;
+}
+
+#add-reseller-form input {
+  background-color: #28324c;
+  color: #ffffff;
+}
+
+#add-reseller-form button {
+  background-color: #4a90e2;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#add-reseller-form button:hover {
+  background-color: #357ab8;
+}
+
+#reseller-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#reseller-list th, #reseller-list td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4a90e2;
+}
+
+#reseller-list tr:hover {
+  background-color: #28324c;
+}
+
+#reseller-list .actions button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#reseller-list .actions button:hover {
+  background-color: #357ab8;
 }
 
 .error-message {
-  color: red;
+  color: #ff6b6b;
   font-size: 0.9rem;
   text-align: center;
 }
 
 nav {
-  margin: 1rem 0;
-  flex-basis: 100%; /* Asegurar que ocupa toda la línea */
+  margin: 1rem auto;
+  flex-basis: 100%;
+  text-align: center;
 }
 
 .nav-links {
@@ -97,6 +217,7 @@ nav {
   text-decoration: none;
   color: #4a90e2;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
@@ -104,10 +225,19 @@ nav {
 }
 
 /* Ajustes responsivos */
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px; /* Reducir ligeramente el tamaño en tablets */
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
-  h1 {
-    font-size: 1.25rem;
-    text-align: center;
+  body {
+    font-size: 14px; /* Reducir en dispositivos móviles */
   }
 
   header {
@@ -115,24 +245,51 @@ nav {
     align-items: center;
   }
 
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  form {
+    max-width: 90%;
+  }
+
+  nav {
+    text-align: center;
+  }
+
   .nav-links {
-    flex-direction: column; /* Cambiar la navegación a una columna */
+    flex-direction: column;
     align-items: center;
     gap: 0.5rem;
   }
 
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+
+  input, button {
+    font-size: 0.9rem; /* Ajustar el tamaño en pantallas pequeñas */
+  }
+
   table {
-    font-size: 0.8rem; /* Reducir tamaño de fuente en tablas */
+    font-size: 0.8rem; /* Reducir para móviles */
+    overflow-x: auto; /* Desplazamiento horizontal si es necesario */
+    display: block; /* Manejo responsivo en pantallas estrechas */
   }
 
   th, td {
-    padding: 0.25rem;
+    padding: 0.5rem; /* Reducir el espacio entre celdas */
+  }
+
+  .actions button {
+    width: 1.8rem;
+    height: 1.8rem; /* Botones más pequeños en móviles */
   }
 }
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   button {
@@ -140,11 +297,11 @@ nav {
   }
 
   table {
-    font-size: 0.7rem; /* Reducir aún más en pantallas pequeñas */
+    font-size: 0.8rem;
   }
 
   th, td {
-    padding: 0.2rem;
+    padding: 0.4rem;
   }
 }
 
@@ -154,7 +311,7 @@ nav {
   }
 
   form {
-    max-width: 90%; /* Formulario ocupa más ancho en vertical */
+    max-width: 90%;
   }
 
   .nav-links {
@@ -164,6 +321,167 @@ nav {
   }
 
   table {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
+}
+
+#device-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #1e2a47;
+  color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#device-table th, #device-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4a90e2;
+  font-size: 1rem;
+}
+
+#device-table th {
+  background-color: #28324c;
+  font-weight: bold;
+}
+
+#device-table tr:hover {
+  background-color: #28324c;
+}
+
+/* Estilos del modal */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  padding: 1rem; /* Espaciado interno para pantallas pequeñas */
+  overflow-y: auto; /* Permitir desplazamiento vertical */
+}
+
+#modal.hidden {
+  display: none;
+}
+
+#modal-box {
+  background: #1e2a47;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 90%; /* Ancho máximo para pantallas pequeñas */
+  max-height: 80%; /* Limitar altura en móviles */
+  overflow-y: auto; /* Desplazamiento interno para contenido largo */
+  width: 100%; /* Ajustar al ancho de la pantalla */
+  box-sizing: border-box;
+}
+
+#modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem; /* Ajustar tamaño del texto */
+}
+
+#modal-content {
+  font-size: 1rem; /* Tamaño del texto para el contenido */
+}
+
+#modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem; /* Tamaño reducido para pantallas pequeñas */
+}
+
+#modal-content th, #modal-content td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #4a90e2;
+}
+
+#modal-content tr:hover {
+  background-color: #28324c;
+}
+
+.close-modal {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.close-modal:hover {
+  background: #e63946;
+}
+
+/* Responsividad para el modal */
+@media (max-width: 768px) {
+  #modal-box {
+    max-width: 95%; /* Ampliar un poco más para dispositivos móviles */
+    max-height: 85%; /* Ajustar el alto */
+    padding: 1rem; /* Reducir el padding interno */
+  }
+
+  #modal-header {
+    font-size: 1rem; /* Reducir el tamaño del texto del encabezado */
+  }
+
+  .close-modal {
+    padding: 0.5rem;
+    font-size: 0.9rem; /* Reducir el tamaño del botón en móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  #modal-box {
+    max-width: 100%; /* Usar el ancho completo en móviles pequeños */
+    max-height: 90%; /* Más espacio para contenido */
+    padding: 0.8rem; /* Reducir aún más el padding */
+  }
+
+  #modal-header {
+    font-size: 0.9rem; /* Tamaño más pequeño para texto del encabezado */
+  }
+
+  .close-modal {
+    font-size: 0.8rem;
+  }
+}
+
+/* Estilos para botones de acciones con iconos */
+.actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #357ab8;
+}
+
+.actions i {
+  pointer-events: none; /* Deshabilitar interacción con el icono dentro del botón */
 }
